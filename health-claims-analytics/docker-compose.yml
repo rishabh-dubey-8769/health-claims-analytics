@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:15
+    container_name: my_postgres_db # Up to you for naming, just make sure that naming is consistent across db.py, secrets.toml
+    environment:
+      POSTGRES_USER: "<YOUR_DB_USER>" # Up to you for naming
+      POSTGRES_PASSWORD: "<YOUR_DB_PASSWORD>" # Up to you for naming
+      POSTGRES_DB: health_claims
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+  webapp:
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
+    environment:
+      - POSTGRES_HOST=<YOUR_DB_HOST> # Up to you for naming
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=<YOUR_DB_USER> # Up to you for naming
+      - POSTGRES_PASSWORD=<YOUR_DB_PASSWORD> # Up to you for naming
+      - POSTGRES_DB=health_claims 
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./app:/app
+      - ./venv:/venv
+
+volumes:
+  dbdata:
