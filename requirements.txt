@@ -1,0 +1,10 @@
+huggingface_hub
+pandas
+sqlalchemy
+psycopg2-binary
+streamlit
+scikit-learn
+joblib
+numpy
+matplotlib
+streamlit
